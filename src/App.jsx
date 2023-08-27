@@ -1,9 +1,16 @@
-import react, { useState } from 'react'
+import react, { useState, useEffect } from 'react'
 import './assets/Theme.css'
 
 function App() {
-  const [list, setList] = useState([])
+  const listStorage = localStorage.getItem('todoList')
+  const initialList = listStorage ? JSON.parse(listStorage) : []
+
+  const [list, setList] = useState(initialList)
   const [descTask, setDescTask] = useState('')
+
+  useEffect(() => {
+    localStorage.setItem('todoList', JSON.stringify(list))
+  }, [list])
 
   const addTask = form => {
     form.preventDefault()
